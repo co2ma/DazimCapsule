@@ -14,7 +14,7 @@ export default function DreamPage() {
         setIsVisible(false); // 애니메이션 시작 (사라짐)
 
         setTimeout(() => {
-            router.push(`/form`);
+            router.push(`/makeForm`);
         }, 500);
     };
 
@@ -49,7 +49,7 @@ export default function DreamPage() {
                         </div>
                     </div>
 
-                    <OutlineDetail/>
+                    <OutlineDetail />
                 </FadeScaleTransition>
             </div>
 

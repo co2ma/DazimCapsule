@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import FadeScaleTransition from "@/components/ui/fade-scale-transition";
 import { OutlineDetail } from "@/components/ui/outline_detail";
+import api from "@/src/api/axios";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 
@@ -20,18 +21,28 @@ export default function InfoPage() {
     // 기본값을 7일 후 날짜로 설정
     const [selectedDate, setSelectedDate] = useState(minDateStr);
 
-    const handleStart = () => {
+    const handleStart = async () => {
         if (!selectedDate) {
             alert("다짐이 도착할 날짜를 선택해주세요.");
             return;
         }
 
         const seed = crypto.randomUUID();
-        setIsVisible(false);
+        const formData = {
+            uniqueLink: seed,
+            expirationDate: selectedDate,
+        };
 
-        setTimeout(() => {
-            router.push(`/form/${seed}?date=${selectedDate}`);
-        }, 500);
+        try {
+            const response = await api.post(`makeForm`, formData);
+            setIsVisible(false); // 1. 폼이 스르륵 사라짐
+
+            setTimeout(() => {
+                router.push(`/form/${seed}`);
+            }, 500);
+        } catch (error) {
+            console.error("실패:", error);
+        }
     };
 
     return (
@@ -70,7 +81,7 @@ export default function InfoPage() {
                     </div>
                 </div>
 
-                <OutlineDetail/>
+                <OutlineDetail />
             </FadeScaleTransition>
         </div>
     );
