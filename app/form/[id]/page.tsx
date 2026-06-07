@@ -15,6 +15,7 @@ export default function FormPage() {
     const router = useRouter();
     const [currUrl, setCurrUrl] = useState("");
     const [isVisible, setIsVisible] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const link = params.id as string;
 
     const [formData, setFormData] = useState({
@@ -24,7 +25,17 @@ export default function FormPage() {
     });
 
     useEffect(() => {
-        api.get(`form/${link}`);
+        const fetchForm = async () => {
+            try {
+                const response = await api.get(`form/${link}`);
+                setIsLoading(false);
+            } catch (error: any) {
+                if (error.response?.status === 404) {
+                    router.push("/"); // 강제로 메인페이지로 보내기
+                }
+            }
+        };
+        fetchForm();
         setCurrUrl(window.location.href);
     }, []);
 
@@ -56,6 +67,7 @@ export default function FormPage() {
         }
     };
 
+    if (isLoading) return null;
     return (
         <div className="relative z-10 flex items-center justify-center min-h-screen">
             <FadeScaleTransition
