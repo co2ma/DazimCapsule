@@ -1,6 +1,6 @@
 # 다짐 캡슐 — 미래의 나에게 보내는 편지
 
-<br>
+<img width="1024" height="348" alt="image" src="https://github.com/user-attachments/assets/c1b21e66-cf48-47c3-a072-92a622c9c470" />
 
 ## 1. 프로젝트 소개
 
