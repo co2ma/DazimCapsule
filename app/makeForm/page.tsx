@@ -13,9 +13,12 @@ export default function InfoPage() {
 
     // 📅 날짜 계산 로직 (리렌더링 시마다 계산되지 않도록 useMemo 사용)
     const minDateStr = useMemo(() => {
-        const date = new Date();
+        const date = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
         date.setDate(date.getDate() + 3); // 오늘로부터 3일 더하기
-        return date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`; // YYYY-MM-DD 형식으로 변환
     }, []);
 
     // 기본값을 7일 후 날짜로 설정
